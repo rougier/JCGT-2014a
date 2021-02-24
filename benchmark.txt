@@ -1,0 +1,89 @@
+# None (1000 frames)         0.671
+# Raw (1000 frames)         18.427  -> 17.756 ms
+# Solid (1000 frames)       20.338  -> 19.667 ms -> x 1.10 (slowdown)
+# Dash solid (1000 frames)  20.387  -> 19.716 ms -> x 1.10 (slowdown)
+# Dash dotted (1000 frames) 37.872  -> 37.201 ms -> x 2.10 (slowdown)
+# --------------------------------
+
+# Warm up... 1.515
+
+# Raw (0 to 1000 segments)
+Y1 = 0.631,0.921,1.083,1.254,1.414,1.589,1.717,1.871,2.056,2.215,2.383
+
+# Solid (0 to 1000 segments)
+Y2 = 0.625,0.994,1.114,1.29,1.544,1.711,1.894,2.075,2.296,2.485,2.657
+
+# Dash solid (0 to 1000 segments)
+Y3 = 0.614,0.94,1.075,1.291,1.49,1.712,1.873,2.067,2.285,2.488,2.663
+
+# Dash dotted (0 to 1000 segments)
+Y4 = 0.625,1.092,1.497,1.9,2.327,2.716,3.034,3.403,3.793,4.223,4.512
+
+# ----------------------------------------------------------------
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+X = np.arange(0,1001,100)
+plt.figure(figsize=(10,5))
+ax = plt.subplot(111)
+
+#ax.spines['left'].set_color('none')
+ax.spines['right'].set_color('none')
+ax.spines['top'].set_color('none')
+ax.xaxis.set_ticks_position('bottom')
+ax.yaxis.set_ticks_position('left')
+
+plt.plot(X, np.array(Y1) - Y1[0], '-', label="Raw", lw=2)
+plt.plot(X, np.array(Y2) - Y2[0], '-', label="Solid", lw=2)
+plt.plot(X, np.array(Y3) - Y3[0], '-', label="Dash-Solid", lw=2)
+plt.plot(X, np.array(Y4) - Y4[0], '-', label="Dash-Dotted", lw=2)
+
+plt.legend(loc='upper left', frameon=False)
+plt.ylabel('Time (ms)')
+plt.xlabel('Number of segments')
+plt.title('Time to render from 0 to 1000 line segments')
+plt.savefig('benchmark-linecount.pdf')
+plt.show()
+
+
+
+
+# 1000 segments
+
+# Raw (0 to 100 linewidth)
+Y1 = 2.406,3.462,4.115,4.702,5.189,5.616,6.0,6.357,6.671,6.986,7.313
+
+# Solid (0 to 100 linewidth)
+Y2 = 2.678,3.786,3.97,4.462,5.069,5.771,6.584,7.329,8.109,8.868,9.663
+
+# Dash solid (0 to 100 linewidth)
+Y3 = 2.667,3.83,4.061,4.886,5.741,6.668,7.547,8.441,9.364,10.273,11.228
+
+# Dash dotted (0 to 100 linewidth)
+Y4 = 4.494,6.26,7.944,7.994,11.316,13.051,14.795,16.583,18.376,20.232,22.079
+
+
+
+X = np.arange(0,51,5)
+plt.figure(figsize=(10,5))
+ax = plt.subplot(111)
+
+#ax.spines['left'].set_color('none')
+ax.spines['right'].set_color('none')
+ax.spines['top'].set_color('none')
+ax.xaxis.set_ticks_position('bottom')
+ax.yaxis.set_ticks_position('left')
+
+
+plt.plot(X, (np.array(Y1) - 1.118), '-', label="Raw",lw=2)
+plt.plot(X, (np.array(Y2) - 1.118), '-', label="Solid",lw=2)
+plt.plot(X, (np.array(Y3) - 1.118), '-', label="Dash-Solid",lw=2)
+plt.plot(X, (np.array(Y4) - 1.118), '-', label="Dash-Dotted",lw=2)
+plt.legend(loc='upper left', frameon=False)
+plt.ylabel('Time (ms)')
+plt.xlabel('Line width in pixel')
+plt.title('Time to render 1000 line segments with varying linewidth')
+plt.savefig('benchmark-linewidth.pdf')
+plt.show()
+
